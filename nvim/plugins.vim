@@ -1,8 +1,16 @@
+" auto-install vim plug
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+	silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+	     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.config/nvim/plugged')
 
 " Declare the list of plugins.
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
+Plug 'bufbuild/vim-buf'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
@@ -33,7 +41,7 @@ call plug#end()
 autocmd BufRead,BufNewFile */scriptdash/scriptdash/**/*.jsx let b:ale_javascript_eslint_options = '--no-eslintrc -c .eslintrc.es5.json'
 au BufRead,BufNewFile *.ts setfiletype typescript
 
-let g:ale_linters = {'javascript': ['flow', 'eslint']}
+let g:ale_linters = {'javascript': ['flow', 'eslint'], 'proto': ['buf-check-lint'], 'go': ['gopls']}
 highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
 highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 let g:ale_sign_error = 'X' " could use emoji
@@ -42,6 +50,8 @@ let g:ale_statusline_format = ['X %d', '? %d', '']
 " %linter% is the name of the linter that provided the message
 " %s is the error or warning message
 let g:ale_echo_msg_format = '%linter% says %s'
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_linters_explicit = 1
 " Map keys to navigate between lines with errors and warnings.
 nnoremap <leader>an :ALENextWrap<cr>
 nnoremap <leader>ap :ALEPreviousWrap<cr>   
@@ -119,3 +129,32 @@ function! SearchWithAgInDirectory(...)
   call fzf#vim#ag(join(a:000[1:], ' '), extend({'dir': a:1}, g:fzf#vim#default_layout))
 endfunction
 command! -nargs=+ -complete=dir AgIn call SearchWithAgInDirectory(<f-args>)
+
+" vim-go config
+au FileType go set noexpandtab
+au FileType go set shiftwidth=4
+au FileType go set softtabstop=4
+au FileType go set tabstop=4
+
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+
+let g:go_auto_sameids = 1
+
+let g:go_fmt_command = "goimports"
+
+let g:go_auto_type_info = 1
+
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+" Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 1
