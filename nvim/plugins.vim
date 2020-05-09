@@ -29,10 +29,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'tag': 'v1.22' }
 Plug 'tpope/vim-commentary'
 Plug 'leafgarland/typescript-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+Plug 'elixir-editors/vim-elixir'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -56,7 +53,7 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_linters_explicit = 1
 " Map keys to navigate between lines with errors and warnings.
 nnoremap <leader>an :ALENextWrap<cr>
-nnoremap <leader>ap :ALEPreviousWrap<cr>   
+nnoremap <leader>ap :ALEPreviousWrap<cr>
 
 " For conceal markers.
 if has('conceal')
