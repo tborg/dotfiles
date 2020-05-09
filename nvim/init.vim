@@ -115,7 +115,10 @@ endif
 
 set termguicolors
 
-color dracula
+color gruvbox
+let g:gruvbox_contrast_dark="hard"
+let g:gruvbox_contrast_light="hard"
+set background=dark
 
 " Set extra options when running in GUI mode
 if has("gui_running")

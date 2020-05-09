@@ -11,27 +11,29 @@ call plug#begin('~/.config/nvim/plugged')
 " Declare the list of plugins.
 Plug 'dense-analysis/ale'
 Plug 'bufbuild/vim-buf'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'wokalski/autocomplete-flow'
-" For func argument completion
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
 Plug 'tpope/vim-surround'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'vim-airline/vim-airline'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'morhetz/gruvbox'
 Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'tag': 'v1.22' }
 Plug 'tpope/vim-commentary'
 Plug 'leafgarland/typescript-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -41,7 +43,7 @@ call plug#end()
 autocmd BufRead,BufNewFile */scriptdash/scriptdash/**/*.jsx let b:ale_javascript_eslint_options = '--no-eslintrc -c .eslintrc.es5.json'
 au BufRead,BufNewFile *.ts setfiletype typescript
 
-let g:ale_linters = {'javascript': ['flow', 'eslint'], 'proto': ['buf-check-lint'], 'go': ['gopls']}
+let g:ale_linters = {'javascript': ['eslint'], 'proto': ['buf-check-lint'], 'ruby': ['rubocop']}
 highlight clear ALEErrorSign " otherwise uses error bg color (typically red)
 highlight clear ALEWarningSign " otherwise uses error bg color (typically red)
 let g:ale_sign_error = 'X' " could use emoji
@@ -55,26 +57,6 @@ let g:ale_linters_explicit = 1
 " Map keys to navigate between lines with errors and warnings.
 nnoremap <leader>an :ALENextWrap<cr>
 nnoremap <leader>ap :ALEPreviousWrap<cr>   
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('auto_complete_delay', 200)
-call deoplete#custom#option('always_refresh', v:false)
-
-" neosnippet
-let g:neosnippet#enable_completed_snippet = 1
-
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-x>     <Plug>(neosnippet_expand_or_jump)
-smap <C-x>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-x>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
@@ -145,7 +127,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 
-let g:go_auto_sameids = 1
+let g:go_auto_sameids = 0
 
 let g:go_fmt_command = "goimports"
 
@@ -158,3 +140,12 @@ let g:go_info_mode='gopls'
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'" Enable integration with airline.
 let g:airline#extensions#ale#enabled = 1
+
+" NERDTree Config
+let NERDTreeMinimalUI = 1
+" Auto-close buffers when you delete a file.
+let NERDTreeAutoDeleteBuffer = 1
+
+" Quickly toggle NERDTree
+nnoremap <Leader>f :NERDTreeToggle %<Enter>
+
