@@ -116,8 +116,8 @@ endif
 set termguicolors
 
 color gruvbox
-let g:gruvbox_contrast_dark="hard"
-let g:gruvbox_contrast_light="hard"
+let g:gruvbox_contrast_light='hard'
+let g:gruvbox_contrast_dark='hard'
 set background=dark
 
 " Set extra options when running in GUI mode

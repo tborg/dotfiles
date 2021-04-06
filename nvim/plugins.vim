@@ -14,7 +14,8 @@ Plug 'bufbuild/vim-buf'
 Plug 'wokalski/autocomplete-flow'
 Plug 'tpope/vim-surround'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+Plug 'amadeus/vim-jsx'
+Plug 'amadeus/vim-xml'
 Plug 'vim-airline/vim-airline'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'arcticicestudio/nord-vim'
@@ -29,7 +30,11 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'tag': 'v1.22' }
 Plug 'tpope/vim-commentary'
 Plug 'leafgarland/typescript-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'elixir-editors/vim-elixir'
+Plug 'aklt/plantuml-syntax'
+Plug 'weirongxu/plantuml-previewer.vim'
+Plug 'tyru/open-browser.vim'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'vim-test/vim-test'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -57,7 +62,7 @@ nnoremap <leader>ap :ALEPreviousWrap<cr>
 
 " For conceal markers.
 if has('conceal')
-  set conceallevel=2 concealcursor=niv
+  set conceallevel=0 concealcursor=niv
 endif
 
 " vim-javascript
@@ -146,3 +151,4 @@ let NERDTreeAutoDeleteBuffer = 1
 " Quickly toggle NERDTree
 nnoremap <Leader>f :NERDTreeToggle %<Enter>
 
+let test#strategy = "neovim"
